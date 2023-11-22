@@ -5,11 +5,12 @@ using Product_ReviewsWebAPI.Models;
 namespace Product_ReviewsWebAPI.Data
 {
 	public class ApplicationDbContext : DbContext
-	{
-		public DbSet<Product> Products { get; set; }
+    { 
+
+        public DbSet<Product> Products { get; set; }
 		public DbSet<Review> Reviews { get; set; }
 
-		public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
 		{
 		}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
