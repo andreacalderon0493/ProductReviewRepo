@@ -68,7 +68,6 @@ namespace Product_ReviewsWebAPI.Controllers
                 return Ok(updatedReview);
             }
 
-            //var otherVersionSong = _context.Songs.Where(s => s.Id == id).FirstOrDefault();
 
         }
 

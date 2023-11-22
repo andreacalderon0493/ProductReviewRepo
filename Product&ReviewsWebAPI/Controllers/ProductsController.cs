@@ -38,22 +38,29 @@ namespace Product_ReviewsWebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            
+
             var productReview = _context.Products
-                .Include(r => r.Reviews)
-                .Select( r => new ProductDTO
+                .Include(p => p.Reviews)
+                .Select(p => new ProductDTO
+                { 
+                   Id = p.Id,
+                   Name = p.Name,
+                   Price = p.Price,
+                   Reviews = p.Reviews.Select(review => new ReviewDTO
                 {
-                    Name = r.Name,
-                    Price = r.Price,
-                    AverageRating = r.Reviews.Average(r => r.Rating),
-                    Reviews = r.Reviews.Select(p => new ReviewDTO
-                    {
-                        Text = p.Text,
-                        Rating = p.Rating
-                        
-                    }).ToList()
+                    Id = review.Id,
+                    Text = review.Text,
+                    Rating = review.Rating
+
+                }).ToList(),
+                    AverageRating = p.Reviews.Average(r => r.Rating),
                 })
                 .FirstOrDefault(r => r.Id == id);
+            if (productReview == null)
+            {
+                return NotFound();
+            }
+            
             return StatusCode(200, productReview);
         }
     
